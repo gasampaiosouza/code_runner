@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/4603725681.js"></script>
+
+    <title>Code runner</title>
+</head>
+
+<body>
+    <section id="container">
+        <div id="highlighted--top">
+            <h1 class="title">Code Runner</h1>
+            <p class="desc color">JavaScript Only</p>
+
+            <button class="btn" id="run--code">Run Code</button>
+        </div>
+
+        <div class="left--side code">
+            <div class="code--container">
+                <textarea id="code--area" class="input" spellcheck="false"
+                    oninput="check_brackets(this), check_word(this)" placeholder="Write your code here!"></textarea>
+            </div>
+        </div>
+
+        <div class="right--side result">
+            <h1 id="text--placeholder">Your result's going to appear <span class="color bold">here</span></h1>
+
+            <span id="result--text" class="bold"></span>
+        </div>
+    </section>
+
+    <!-- Toggle mode -->
+    <div class="toggle--container">
+        <div class="toggle--icon" onclick="toggle_mode(document.body)">
+            <i class="fas fa-moon fa-lg"></i>
+        </div>
+    </div>
+    <!--  -->
+
+    <script src="main.js"></script>
+    <script src="sided.js"></script>
+</body>
+
+</html>
