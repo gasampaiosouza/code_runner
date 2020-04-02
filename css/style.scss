@@ -179,6 +179,11 @@ body {
 		width: 30%;
 
 		z-index: 999;
+
+		p.desc:nth-last-child(1) {
+			margin: 0 0 20px 0;
+			font-weight: bold !important;
+		}
 	}
 
 	.media--align {
@@ -237,7 +242,7 @@ body {
 		}
 	}
 	#run--code {
-		margin: 35px 0;
+		margin: 35px 0 10px 0;
 	}
 }
 

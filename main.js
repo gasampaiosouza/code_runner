@@ -59,6 +59,10 @@ function setCaretPosition(elemId, caretPos) {
 }
 
 $('#run--code').click(() => run_code($('#code--area'), $('#result--text'), $('#text--placeholder')));
+document.addEventListener('keyup', (e) => {
+    if (e.keyCode === 13 && e.ctrlKey)
+        run_code($('#code--area'), $('#result--text'), $('#text--placeholder'));
+})
 
 function run_code(input, output, display_none = '') {
     try {

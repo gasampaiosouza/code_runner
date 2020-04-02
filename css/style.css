@@ -154,6 +154,11 @@ body {
   z-index: 999;
 }
 
+#container #highlighted--top p.desc:nth-last-child(1) {
+  margin: 0 0 20px 0;
+  font-weight: bold !important;
+}
+
 #container .media--align {
   position: absolute;
   width: 100%;
@@ -236,7 +241,7 @@ body {
 }
 
 #container #run--code {
-  margin: 35px 0;
+  margin: 35px 0 10px 0;
 }
 
 .toggle--container {
