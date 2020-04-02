@@ -143,7 +143,7 @@ body {
 	background: var(--light-color);
 	// background: -webkit-linear-gradient(to left, #ffffff, #ece9e6);
 	// background: linear-gradient(to left, #ffffff, #ece9e6);
-	overflow-x: hidden;
+	overflow: hidden;
 
 	transition: all .2s ease-in-out;
 }
@@ -181,7 +181,7 @@ body {
 		z-index: 999;
 
 		p.desc:nth-last-child(1) {
-			margin: 0 0 20px 0;
+			margin: 0 0 50px 0;
 			font-weight: bold !important;
 		}
 	}
