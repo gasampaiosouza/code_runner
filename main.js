@@ -11,7 +11,7 @@ $('#code--area').focus();
 (function () {
     var oldLog = console.log;
     console.log = function (message) {
-        $('#result--text').html(`<span class='no-color'>Console is saying:</span> <br/> ${message}`);
+        $('#result--text').html(`<span class='no-color'>Console is saying:</span> <br/><span class='console'>${message}</span>`);
         oldLog.apply(console, arguments);
     };
 })();
@@ -24,8 +24,8 @@ function auto_grow(element) {
 
 function check_brackets(element) {
     let element_text = $(`#${element.id}`).val();
-    const symbols_open = ['(', '[', '{', "'", '"'];
-    const symbols_close = [')', ']', '}', "'", '"'];
+    const symbols_open = ['(', '[', '{'];
+    const symbols_close = [')', ']', '}'];
 
     let last_char = element_text.slice(element_text.length - 1, element_text.length);
 
@@ -71,9 +71,13 @@ function setCaretPosition(elemId, caretPos) {
 $('#run--code').click(() => run_code($('#code--area'), $('#result--text'), $('#text--placeholder')));
 
 function run_code(input, output, display_none = '') {
-    let code = input.val();
+    try {
+        let code = input.val();
 
-    output.html(eval(code));
+        output.html(eval(code));
+    } catch (err) {
+        output.html(`<span class='no-color'>Console and it's errors...</span> <br> <span class='console'>${err}</span>`);
+    }
 
     display_none.css('display', 'none');
 }

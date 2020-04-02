@@ -42,6 +42,8 @@ $code-font: 'Fira code', monospace;
 	--light_secondary: #ff7d83;
 	--shadow-secondary: 252, 99, 107;
 
+	--tertiary: #3be8b0;
+
 	--checkmark-bg: #233140;
 
 	--result-bg: #212121;
@@ -126,6 +128,11 @@ $code-font: 'Fira code', monospace;
 	font-family: $font;
 }
 
+.console {
+	color: var(--tertiary) !important;
+	font-weight: 600;
+}
+
 //
 
 body {
@@ -139,10 +146,6 @@ body {
 	overflow-x: hidden;
 
 	transition: all .2s ease-in-out;
-}
-
-.blank_space {
-	margin: 50px 0;
 }
 
 #container {

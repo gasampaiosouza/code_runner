@@ -30,6 +30,7 @@
   --secondary: #fc636b;
   --light_secondary: #ff7d83;
   --shadow-secondary: 252, 99, 107;
+  --tertiary: #3be8b0;
   --checkmark-bg: #233140;
   --result-bg: #212121;
 }
@@ -103,6 +104,11 @@
   font-family: "Fira Sans", sans-serif;
 }
 
+.console {
+  color: var(--tertiary) !important;
+  font-weight: 600;
+}
+
 body {
   height: 100vh;
   font-family: "Fira Sans", sans-serif;
@@ -110,10 +116,6 @@ body {
   overflow-x: hidden;
   -webkit-transition: all .2s ease-in-out;
   transition: all .2s ease-in-out;
-}
-
-.blank_space {
-  margin: 50px 0;
 }
 
 #container {
