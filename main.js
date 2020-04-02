@@ -12,6 +12,7 @@ $('#code--area').focus();
     var oldLog = console.log;
     console.log = function (message) {
         $('#result--text').html(`<span class='no-color'>Console is saying:</span> <br/><span class='console'>${message}</span>`);
+        $('#text--placeholder').css('display', 'none');
         oldLog.apply(console, arguments);
     };
 })();
@@ -35,17 +36,6 @@ function check_brackets(element) {
             setCaretPosition(element.id, element_text.length);
         }
 
-}
-
-function check_word(element) {
-    // let element_text = $(`#${element.id}`).val();
-
-    // const word_array = ['let', 'const', 'var', 'console', 'return', 'function', 'if', 'else', 'while', 'for', 'do', 'try', 'catch', 'new'];
-
-    // for (let i = 0; i < element_text.split(' ').length; i++)
-    //     for (let j = 0; j < word_array.length; j++)
-    //         if (element_text.split(' ')[i] == word_array[j])
-    //             element_text.split(' ')[i].style.color = 'red';
 }
 
 const get_last_word = phrase => phrase.split(' ')[phrase.split(' ').length - 1];
@@ -84,4 +74,4 @@ function run_code(input, output, display_none = '') {
 
 setTimeout(() => {
     console.clear();
-}, 1000);
+}, 200);
