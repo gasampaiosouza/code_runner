@@ -30,8 +30,6 @@ const checkBrackets = (element) => {
   const elementID = $(`#${element.id}`);
 
   const ElementValue = elementID.val();
-  const symbolsOpen = ['(', '[', '{', '<'];
-  const symbolsClose = [')', ']', '}', '>'];
 
   const setCaretPosition = (textAreaID, caretPos) => {
     const textAreaElement = document.getElementById(textAreaID);
@@ -50,14 +48,18 @@ const checkBrackets = (element) => {
     return textAreaElement.focus();
   };
 
-  symbolsOpen.forEach((symbol, index) => {
+  const symbols = ['()', '[]', '{}', '<>'];
+
+  symbols.forEach((symbolGroup) => {
+    const symbol = symbolGroup.split('');
+
     const lastChar = ElementValue.slice(
       ElementValue.length - 1,
       ElementValue.length
     );
 
-    if (lastChar === symbol) {
-      elementID.val(ElementValue + symbolsClose[index]);
+    if (lastChar === symbol[0]) {
+      elementID.val(ElementValue + symbol[1]);
 
       setCaretPosition(element.id, ElementValue.length);
     }
