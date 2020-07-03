@@ -1,81 +1,98 @@
 'use strict';
 
 const toggle_mode = (element) => (
-    $('.toggle--icon').toggleClass('dark'),
-
-    element.classList.toggle('dark-mode')
+  $('.toggle--icon').toggleClass('dark'), element.classList.toggle('dark-mode')
 );
 
-$('#code--area').focus();
+const $codeArea = $('#code--area');
 
+$codeArea.focus();
+
+const $resultPlaceholder = $('#text--placeholder');
+const $result = $('#result--text');
+
+// change console.log default behavior
 (function () {
-    var oldLog = console.log;
-    console.log = function (message) {
-        $('#result--text').html(`<span class='no-color'>Console is saying:</span> <br/><span class='console'>${message}</span>`);
-        $('#text--placeholder').css('display', 'none');
-        oldLog.apply(console, arguments);
-    };
+  var oldLog = console.log;
+
+  console.log = function (message) {
+    const consoleMessage = `
+			<span class='no-color'>Console is saying:</span> <br/><span class='console'>${message}</span>
+		`;
+    $result.html(consoleMessage);
+
+    $resultPlaceholder.css('display', 'none');
+    return oldLog.apply(console, arguments);
+  };
 })();
 
-// grow textarea
-function auto_grow(element) {
-    element.style.height = '5px';
-    element.style.height = `${element.scrollHeight}px`;
-}
+const checkBrackets = (element) => {
+  const elementID = $(`#${element.id}`);
 
-function check_brackets(element) {
-    let element_text = $(`#${element.id}`).val();
-    const symbols_open = ['(', '[', '{'];
-    const symbols_close = [')', ']', '}'];
+  const ElementValue = elementID.val();
+  const symbolsOpen = ['(', '[', '{', '<'];
+  const symbolsClose = [')', ']', '}', '>'];
 
-    let last_char = element_text.slice(element_text.length - 1, element_text.length);
+  const setCaretPosition = (textAreaID, caretPos) => {
+    const textAreaElement = document.getElementById(textAreaID);
 
-    for (let i = 0; i < symbols_open.length; i++)
-        if (last_char == symbols_open[i]) {
-            $(`#${element.id}`).val(element_text + symbols_close[i]);
-            setCaretPosition(element.id, element_text.length);
-        }
-
-}
-
-const get_last_word = phrase => phrase.split(' ')[phrase.split(' ').length - 1];
-
-function setCaretPosition(elemId, caretPos) {
-    let elem = document.getElementById(elemId);
-
-    if (elem != null) {
-        if (elem.createTextRange) {
-            let range = elem.createTextRange();
-            range.move('character', caretPos);
-            range.select();
-        } else {
-            if (elem.selectionStart) {
-                elem.focus();
-                elem.setSelectionRange(caretPos, caretPos);
-            } else
-                elem.focus();
-        }
+    if (textAreaElement.createTextRange) {
+      let range = textAreaElement.createTextRange();
+      return range.move('character', caretPos), range.select();
     }
-}
 
-$('#run--code').click(() => run_code($('#code--area'), $('#result--text'), $('#text--placeholder')));
+    if (textAreaElement.selectionStart)
+      return (
+        textAreaElement.setSelectionRange(caretPos, caretPos),
+        textAreaElement.focus()
+      );
+
+    return textAreaElement.focus();
+  };
+
+  symbolsOpen.forEach((symbol, index) => {
+    const lastChar = ElementValue.slice(
+      ElementValue.length - 1,
+      ElementValue.length
+    );
+
+    if (lastChar === symbol) {
+      elementID.val(ElementValue + symbolsClose[index]);
+
+      setCaretPosition(element.id, ElementValue.length);
+    }
+  });
+};
+
+const runCodeButton = $('#run--code');
+
+// hide things on code run
+runCodeButton.click(() => showCode($codeArea, $result, $resultPlaceholder));
+
 document.addEventListener('keyup', (e) => {
-    if (e.keyCode === 13 && e.ctrlKey)
-        run_code($('#code--area'), $('#result--text'), $('#text--placeholder'));
-})
+  if (e.keyCode === 13 && e.ctrlKey)
+    return showCode($codeArea, $result, $resultPlaceholder);
+});
 
-function run_code(input, output, display_none = '') {
-    try {
-        let code = input.val();
+function showCode(input, output, display_none = '') {
+  try {
+    const code = input.val();
 
-        output.html(eval(code));
-    } catch (err) {
-        output.html(`<span class='no-color'>Console and it's errors...</span> <br> <span class='console'>${err}</span>`);
-    }
+    output.html(eval(code));
+  } catch (err) {
+    const errorMessage = `
+			<span class='no-color'>Console and it's errors...</span> <br> <span class='console'>${err}</span>
+		`;
 
-    display_none.css('display', 'none');
+    output.html(errorMessage);
+  }
+
+  const hideElement = (element) => element.css('display', 'none');
+
+  return hideElement(display_none);
 }
 
+// clear console, so it doesn't appear in the screen;
 setTimeout(() => {
-    console.clear();
+  console.clear();
 }, 200);
