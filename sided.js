@@ -1,15 +1,23 @@
-// allow textarea indent on tab
+// allow textarea to indent on tab
 
-$(document).delegate('#code--area', 'keydown', function (e) {
-    let keyCode = e.keyCode || e.which;
+function indentOnTab(event) {
+  const keyCode = event.keyCode || event.which;
+  const tabKey = 9;
 
-    if (keyCode == 9) {
-        e.preventDefault();
-        let start = this.selectionStart;
-        let end = this.selectionEnd;
+  if (keyCode == tabKey) {
+    event.preventDefault();
+    const start = this.selectionStart;
+    const end = this.selectionEnd;
 
-        $(this).val($(this).val().substring(0, start) + "\t" + $(this).val().substring(end));
+    const value = $(this).val();
+    const valueBefore = value.substring(0, start);
+    const valueAfter = value.substring(end);
+    const tab = '\t';
 
-        this.selectionStart = this.selectionEnd = start + 1;
-    }
-})
+    $(this).val(valueBefore + tab + valueAfter);
+
+    return (this.selectionStart = this.selectionEnd = start + 1);
+  }
+}
+
+$(document).delegate('#code--area', 'keydown', indentOnTab);
